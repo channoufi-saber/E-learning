@@ -29,16 +29,6 @@ a {
   --microsoft-excel-color: #076127;
   --sql-color: #a5a5a5;
 }
-/* Themes */
-
-.light-theme {
-  background-color: #fff;
-  color: #000;
-}
-.dark-theme {
-  background-color: #000;
-  color: #fff;
-}
 
 /* Navigation */
 .navbar {
@@ -59,13 +49,6 @@ a {
   color: var(--primary-color);
   padding: 0.6rem 0.3rem;
   border-radius: 50%;
-  transition: all 0.25s ease-in-out;
-}
-
-.navbar-brand .logo:hover {
-  background-color: #000;
-  color: var(--primary-color);
-  cursor: pointer;
 }
 
 .navbar-nav {
@@ -224,7 +207,8 @@ form .btn {
   text-align: center;
 }
 
-.categories-container .card .icon {
+.categories-container .card i {
+  font-size: 4rem;
   border-radius: 10%;
   padding: 0.5rem;
   margin: 0.2rem;
@@ -232,49 +216,48 @@ form .btn {
   transition: var(--transition);
 }
 
-.categories-container .card .icon:hover {
+.categories-container .card i:hover {
   background-color: #fff;
   transition: var(--transition);
-  cursor: pointer;
 }
 
-.categories-container .card .icon:hover.html5 {
+.categories-container .card i:hover.fa-html5 {
   color: var(--html-color);
 }
 
-.categories-container .card .icon:hover.css3 {
+.categories-container .card i:hover.fa-css3 {
   color: var(--css-color);
 }
 
-.categories-container .card .icon:hover.js {
+.categories-container .card i:hover.fa-js {
   color: var(--js-color);
 }
 
-.categories-container .card .icon:hover.python {
+.categories-container .card i:hover.fa-python {
   color: var(--python-color);
 }
 
-.categories-container .card .icon:hover.java {
+.categories-container .card i:hover.fa-java {
   color: var(--java-color);
 }
 
-.categories-container .card .icon:hover.react {
+.categories-container .card i:hover.fa-react {
   color: var(--react-color);
 }
 
-.categories-container .card .icon:hover.r-project {
+.categories-container .card i:hover.fa-r-project {
   color: var(--r-color);
 }
 
-.categories-container .card .icon:hover.file-excel {
+.categories-container .card i:hover.fa-file-excel {
   color: var(--microsoft-excel-color);
 }
 
-.categories-container .card .icon:hover.people-group {
+.categories-container .card i:hover.fa-people-group {
   color: var(--microsoft-teams-color);
 }
 
-.categories-container .card .icon:hover.database {
+.categories-container .card i:hover.fa-database {
   color: var(--sql-color);
 }
 
@@ -282,15 +265,7 @@ form .btn {
   transform: translateY(-10px);
   transition: var(--transition);
 }
-.offers-container {
-  background-color: #eee;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-}
-.offers-container.dark {
-  background-color: #000;
-}
+
 .offers-container,
 .testimonials-container {
   display: grid;
@@ -304,8 +279,8 @@ form .btn {
   transition: 0.3s ease-out;
 }
 
-.offers-container .card .i,
-.testimonials-container .card .i {
+.offers-container .card i,
+.testimonials-container .card i {
   font-size: 4rem;
   background-color: var(--secondary-color);
   color: #fff;
@@ -571,7 +546,7 @@ p {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+  display: none;
 }
 
 .modal-content {
@@ -592,47 +567,4 @@ p {
   background-color: #333;
   color: #fff;
   cursor: pointer;
-}
-
-/* Utilities */
-
-.fadeIn {
-  animation: fadeIn 0.3s ease-out;
-}
-.fadeIn-2ms {
-  animation: fadeIn 0.5s ease-out;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.goToTopArrow {
-  font-size: 3rem;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  cursor: pointer;
-  color: var(--primary-color);
-  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  opacity: 0.5;
-  transition: all 0.2s linear;
-}
-
-.goToTopArrow:hover {
-  opacity: 1;
-}
-
-.form {
-  position: relative;
-  margin: auto;
-  padding: 2rem;
-  box-shadow: 2px 5px 9px rgba(0, 0, 0, 0.4);
-  border-radius: 5px;
-  background-color: #fff;
 }
