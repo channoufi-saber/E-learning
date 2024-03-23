@@ -1,4 +1,3 @@
-import {useState} from "react";
 import './App.css';
 import  Title from "./components/Title";
 import  Header from "./components/Header";
@@ -11,10 +10,27 @@ import { AiFillHtml5, AiFillPlayCircle, AiFillUnlock } from 'react-icons/ai';
 import { DiCss3Full } from 'react-icons/di';
 import { SiJavascript } from 'react-icons/si';
 import { FaFileDownload, FaMapMarkedAlt } from 'react-icons/fa';
+import { useEffect, useRef, useState } from 'react';
+import TestimonialsList from './components/Lists/TestimonialsList';
+import { BsArrowUpCircle } from 'react-icons/bs';
+import LoginForm from './components/page-components/LoginForm';
+import RegistrationForm from './components/page-components/RegistrationForm';
 
 function App() {
   const [showCourseModal,setShowCourseModal]=useState(false);
   const [showOffers,setShowOffers]=useState(false);
+  const [goToTopArrow,setGoToTopArrow]=useState(false);
+
+  const offersRef=useRef();
+  const topRef=useRef();
+
+  const [forms,setForms]=useState({
+    loginForm:false,
+    RegistrationForm:false,
+  })
+
+  const [login,setLogin]=useState(false)
+
   function handleStartLearningEvent() {
     setShowCourseModal(true)
   }
@@ -27,7 +43,39 @@ function App() {
     showOffers === false ? setShowOffers(true):setShowOffers(false)
   }
 
- // Offers List
+  const handleScrollToOffers=()=>{
+    offersRef.current.scrollIntoView({behavior:"smooth"});
+  };
+
+  const handleGoToTop=()=>{
+    topRef.current.scrollIntoView({behavior:"smooth"});
+  }
+
+  const handleShowLoginForm=()=>{
+    setForms({registrationForm:false,loginForm:true});
+  }
+
+  const handleCancelLoginForm=()=>{
+    setForms({...forms,loginForm:false});
+  }
+
+  function handleLoginFormValidation(){
+    setForms({...forms,loginForm:false});
+    setShowCourseModal(false)
+    setLogin(true)
+  }
+
+// Register form
+
+  function handleShowRegistrationForm(){
+    setForms({loginForm:false,registrationForm:true})
+  }
+
+  const handleCancelRegistrationForm=()=> {
+    setForms({ ...forms,registrationForm:false})
+  }
+
+// Offers List
 
   const offerList = [
     {
@@ -65,14 +113,24 @@ function App() {
     },
   ];
 
+  function scrollFunction(){
+    if(
+      document.body.scrollTop>20 || document.documentElement.scrollTop >20
+      ){
+      setGoToTopArrow(true);
+    }else {
+      setGoToTopArrow(false);
+    }
+  }
+
+  useEffect(()=>{
+    window.onscroll=()=>scrollFunction();
+  },[]);
 
   return (
     <>
-    <div className="container container-lg">
-        {showCourseModal && <Modal title={"Modal"}
-        title={"Access denied"}
-        text="Please login in order to access this content"
-        cancelEvent={handleModalCancelEvent} />}
+    <div className="container container-lg" ref={topRef} >
+        
     <Header>
     <div className="header-text mb-3">
     <Title text="Learn to code by watching others" classes={"header-title fs-xxl mb-3"} 
@@ -87,12 +145,13 @@ function App() {
             classes={"btn btn-primary text-light"}
             type={"button"}
             text={"Try it free 30 days"}
-            onClick={handleStartLearningEvent}
+            onClick={!login ? handleStartLearningEvent : ()=>window.alert("You are logged in.")}
           />
           <Button 
             classes={"btn btn-secondary"}
             type={"button"}
             text={"Learn more..."}
+            onClick={handleScrollToOffers}
           />
           </div>
         <img className="header-img" src={headerImg} alt="header-img" />
@@ -121,6 +180,7 @@ function App() {
       </section>
                 {/* OFFERS */}
       <section
+            ref={offersRef}
             className="offers container container-md p-2"
           >
             <Title
@@ -150,7 +210,7 @@ function App() {
                 ))}
               </div>
             )}
-            <a
+            <a href="#"
               onClick={handleShowOffers}
               style={{ cursor: "pointer", textDecoration: "underline" }}
             >
@@ -159,8 +219,53 @@ function App() {
               </h4>
             </a>
           </section>
+          {/* TESTIMONIALS*/}
+          <section className="testimonials my-4">
+            <Title
+            classes={"subtitle text-center mb-4"}
+            text="What our users say"
+             />
+             <div className="testimonials-container">
+              <TestimonialsList />
+             </div>
+          </section>
     </main>
     </div>
+    {showCourseModal && (<Modal
+        title={"Access denied"}
+        text="Please login in order to access this content"
+        cancelEvent={handleModalCancelEvent}
+        loginEvent={!login && handleShowLoginForm}
+         />)}
+
+    {goToTopArrow && <BsArrowUpCircle className="goToTopArrow"
+    onClick={handleGoToTop}
+     /> }
+
+{/* Forms */}
+
+{/* Login Form */}
+
+     {forms.loginForm &&(
+      <div className="modal">
+        <LoginForm 
+          handleCancel={handleCancelLoginForm}
+          showRegister={handleShowRegistrationForm}
+          loggedIn={handleLoginFormValidation}
+           />
+      </div>
+      )}
+
+{/* Registration Form */}
+
+     {forms.registrationForm &&(
+      <div className="modal">
+        <RegistrationForm 
+           handleCancel={handleCancelRegistrationForm}
+           showLogin={handleShowLoginForm}
+           />
+      </div>
+      )}
     </>
   );
 }
